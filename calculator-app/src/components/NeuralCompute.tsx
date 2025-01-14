@@ -133,12 +133,24 @@ const NeuralCompute: React.FC<NeuralComputeProps> = ({ onCalculation }) => {
     try {
       const result = eval(equation + display);
       const formattedResult = Number(result).toString().slice(0, 16);
-      const calculation = `${equation}${display} = ${formattedResult}`;
+      let calculation = `${equation}${display} = ${formattedResult}`;
+      
+      // Add currency symbol if in currency mode
+      if (activeTab === 'Currency' && selectedCurrency) {
+        const currencySymbols: { [key: string]: string } = {
+          'USD': '$',
+          'EUR': '€',
+          'GBP': '£',
+          'JPY': '¥'
+        };
+        calculation = `${currencySymbols[selectedCurrency]}${calculation}`;
+      }
+      
       setDisplay(formattedResult);
       setEquation('');
       setIsNewCalculation(true);
       onCalculation(calculation);
-    } catch (error) {
+    } catch {
       setDisplay('Error');
       setEquation('');
     }

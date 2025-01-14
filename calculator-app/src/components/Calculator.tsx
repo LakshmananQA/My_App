@@ -45,7 +45,7 @@ const Calculator = () => {
       setEquation('');
       setIsNewCalculation(true);
       setHistory(prev => [calculation, ...prev].slice(0, 10));
-    } catch (error) {
+    } catch {
       setDisplay('Error');
       setEquation('');
     }
